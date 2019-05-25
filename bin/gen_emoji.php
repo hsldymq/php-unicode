@@ -57,7 +57,10 @@
     {
         $indentStr = str_repeat(" ", $indentLevel * 4);
         foreach ($result as $key => $value) {
-            $key = strtoupper($key);
+            if ($key !== '') {
+                $key = strtoupper(sprintf("%04x", hexdec($key)));
+            }
+
             if (is_array($value)) {
                 echo "{$indentStr}'{$key}' => [\n";
                 $this->outputFields($value, $indentLevel + 1);
