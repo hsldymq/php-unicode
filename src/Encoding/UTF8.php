@@ -39,7 +39,7 @@ class UTF8
     {
         $charLen = self::charLen($char[0]);
         $codePoint = 0;
-        for ($i = 0; $i < strlen($char); $i++) {
+        for ($i = 0; $i < $charLen; $i++) {
             $byte = ord($char[$i]);
 
             if ($i === 0) {
