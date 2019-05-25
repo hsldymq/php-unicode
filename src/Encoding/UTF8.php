@@ -34,9 +34,14 @@ class UTF8
      * @param string $char
      *
      * @return int
+     * @throws \InvalidArgumentException
      */
     public static function getCodePoint(string $char): int
     {
+        if (strlen($char) === 0) {
+            throw new \InvalidArgumentException('Not allow empty string');
+        }
+
         $charLen = self::charLen($char[0]);
         $codePoint = 0;
         for ($i = 0; $i < $charLen; $i++) {
