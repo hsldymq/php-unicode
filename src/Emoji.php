@@ -12,7 +12,10 @@ class Emoji
 
     private static $versions = [];
 
-    public function __construct(string $version)
+    /**
+     * @param string $version 初始化不传递版本号则将会在今后包的升级中自动升级为新的版本
+     */
+    public function __construct(string $version = self::VERSION_12_0)
     {
         if (!isset(self::$versions[$version])) {
             self::$versions[$version] = require self::$versionsConfig[$version];
