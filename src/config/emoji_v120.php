@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * 以类似于trie的结构保存emoji的单词表.
+ *
  * @see http://www.unicode.org/emoji/charts/emoji-list.html
  * @see http://unicode.org/Public/emoji/12.0/
  * @see http://unicode.org/Public/emoji/12.0/emoji-test.txt
