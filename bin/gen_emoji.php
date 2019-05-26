@@ -58,7 +58,7 @@
         $indentStr = str_repeat(" ", $indentLevel * 4);
         foreach ($result as $key => $value) {
             if ($key !== '') {
-                $key = strtoupper(sprintf("%04x", hexdec($key)));
+                $key = sprintf("%04X", hexdec($key));
             }
 
             if (is_array($value)) {
