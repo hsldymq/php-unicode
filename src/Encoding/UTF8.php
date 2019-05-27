@@ -12,6 +12,40 @@ class UTF8
     ];
 
     /**
+     * 根据Unicode code point列表返回UTF-8编码的字符串.
+     *
+     * @param int[] $codePoints
+     *
+     * @return string
+     */
+    public static function fromCodePoints(array $codePoints): string
+    {
+        $bytes = [];
+        foreach ($codePoints as $each) {
+            if ($each > 0x10FFFF || $each < 0) {
+                throw new \InvalidArgumentException('Code point out of range');
+            }
+
+            $hob = false;
+            if ($each >= 65536) {
+                $bytes[] = chr(($each >> 18) & 0x7 | 0xF0);
+                $hob = true;
+            }
+            if ($each >= 2048) {
+                $bytes[] = chr(($each >> 12) & ($hob ? 0xBF : 0x0F) | ($hob ? 0x80 : 0xE0));
+                $hob = true;
+            }
+            if ($each >= 128) {
+                $bytes[] = chr(($each >> 6) & ($hob ? 0xBF : 0x1F) | ($hob ? 0x80 : 0xC0));
+                $hob = true;
+            }
+            $bytes[] = chr($each & ($hob ? 0xBF : 0x7F) | ($hob ? 0x80 : 0));
+        }
+
+        return implode('', $bytes);
+    }
+
+    /**
      * 将UTF-8编码的字符串转换为unicode code point数组.
      *
      * @param string $str
