@@ -55,7 +55,7 @@ class Emoji
     }
 
     /**
-     * 返回以制定code point开头的所有emoji.
+     * 返回以指定code point开头的所有emoji code point序列.
      *
      * @param string $prefix
      *
