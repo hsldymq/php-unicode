@@ -18,40 +18,34 @@ class UTF8
      *
      * @return int[]
      */
-    public static function getCodePointArray(string $str): array
+    public static function getCodePoints(string $str): array
     {
         $ret = [];
         foreach (self::iterChar($str) as $char) {
-            $ret[] = self::getCodePoint($char);
+            $ret[] = self::getCharCodePoint($char);
         }
 
         return $ret;
     }
 
     /**
-     * 获得字符的code point.
+     * 获得单个字符的code point.
      *
      * @param string $char
      *
      * @return int
      * @throws \InvalidArgumentException
      */
-    public static function getCodePoint(string $char): int
+    public static function getCharCodePoint(string $char): int
     {
         if (strlen($char) === 0) {
-            throw new \InvalidArgumentException('Not allow empty string');
+            throw new \InvalidArgumentException('Can not get code point from empty string');
         }
 
         $charLen = self::charLen($char[0]);
-        $codePoint = 0;
-        for ($i = 0; $i < $charLen; $i++) {
-            $byte = ord($char[$i]);
-
-            if ($i === 0) {
-                $codePoint = $byte & self::$mask[$charLen];
-            } else {
-                $codePoint = ($codePoint << 6) | ($byte & 0x3F);
-            }
+        $codePoint = ord($char[0]) & self::$mask[$charLen];
+        for ($i = 1; $i < $charLen; $i++) {
+            $codePoint = ($codePoint << 6) | (ord($char[$i]) & 0x3F);
         }
 
         return $codePoint;
